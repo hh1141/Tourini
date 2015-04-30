@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
   before_action :find_user, only: [:show]
   before_action :authenticate_user!
-  
+
 
   def index
     @user = current_user
     @post = Post.new
-    # @posts = current_user.my_timeline
+    @posts = current_user.friend_posts.all.order('created_at DESC')
   end 
 
   def search

@@ -13,11 +13,13 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     @user = current_user
+    @posts = current_user.friend_posts.all.order('created_at DESC')
 
     if @post.save
       redirect_to root_path, notice: "Successfully created post"
     else 
-      render 'new'
+      # render 'users/index'
+      render 'users/index'
     end 
   end 
 

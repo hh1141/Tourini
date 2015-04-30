@@ -146,6 +146,20 @@ body {
 .add-button {
 	margin-top: 25px;
 }
+.post-btn {
+    margin-top: 40px;
+    .btn{
+        padding: 50px 70px;
+    }
+}
+.error-btn {
+    margin-top: 40px;
+    .btn{
+        padding: 67px;
+    }
+}
+
+
 
 #post_show {
 	.panel-heading {
