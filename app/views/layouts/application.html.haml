@@ -1,7 +1,7 @@
 !!! 5
 %html
 %head
-  %title Project
+  %title TUORINI
   = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
   = csrf_meta_tags
@@ -10,18 +10,29 @@
     .container
       .navbar-brand= link_to "Tourini", root_path
       - if user_signed_in?
-        %ul.nav.navbar-nav.navbar-right
-          %li= link_to "My page", posts_path(@post)
-          %li= link_to "Search Friends", root_path
+        %ul.nav.navbar-nav.navbar-left
+          %li= link_to "My page", current_user
+          %li= link_to "My friend", friends_index_path
           %li= link_to "Sign Out", destroy_user_session_path, method: :delete
       - else
-        %ul.nav.navbar-nav.navbar-right
+        %ul.nav.navbar-nav.navbar-left
           %li= link_to "Sign Up", new_user_registration_path
           %li= link_to "Sign In", new_user_session_path
-
+      - if user_signed_in?
+        - if !current_user.inverse_requests.empty?
+          = link_to requests_index_path class: "btn btn-primary" do 
+            Request
+            %span.badge= current_user.inverse_requests.count
+        - else
+          = link_to "Request", requests_index_path
+        .navbar-form.navbar-right
+          = form_tag search_users_path, method: :get, role: "search" do
+            %p
+              = text_field_tag :search, params[:search], placeholder: "User name or Keyword", class: "form-control"
+              = submit_tag "Search", name: nil, class: "btn btn-default"
+       
   .container
     - flash.each do |name, msg|
       = content_tag :div, msg, class: "alert alert-info"
 
     = yield
-

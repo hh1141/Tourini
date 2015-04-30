@@ -1,0 +1,10 @@
+%h1 Friends
+.row
+  - @friends.each do |friend|
+    .col-sm-6.col-md-3
+      .thumbnail
+        .panel.image
+          = link_to (gravatar_for friend), friend
+        .panel-body
+          = friend.email
+  

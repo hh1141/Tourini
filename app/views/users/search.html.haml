@@ -1,0 +1,8 @@
+- if @users.count == 0
+  .container
+    = content_tag :div, "There is no result matched!", class: "alert"
+- else
+  .row
+    - @users.each do |user|
+      = link_to user.email, user
+      .br/

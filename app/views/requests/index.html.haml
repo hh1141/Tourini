@@ -1,0 +1,12 @@
+%h1= pluralize(@requests.count, 'Request')
+.row
+  - @requests.each do |request|
+    .col-sm-6.col-md-3
+      .thumbnail
+        .panel.image
+          = link_to (gravatar_for request.from), request.from
+        .panel-body
+          = request.from.email
+          .btn-group
+            = link_to "Accept", friendships_create_path(friend_id: request.from, request_id: request), method: :post, class: "btn btn-default"
+            = link_to "Deny", requests_destroy_path(request_id: request), method: :delete, class: "btn btn-default"

@@ -1,0 +1,23 @@
+#post_show.row
+  .col-md-8.col-md-offset-2
+    .panel.panel-default
+      - if !@post.image_file_name.nil?
+        .panel-heading.post_image
+          = image_tag @post.image.url(:medium)
+      .panel-body
+        %p.description= @post.text
+      .panel-footer
+        .row
+          .col-md-7
+            %p.user
+              Submitted by
+              = @post.user.email
+              = time_ago_in_words(@post.created_at)
+              ago
+          .col-md-5
+            .btn-group.pull-right
+              - if current_user == @post.user
+                = link_to "Edit", edit_user_post_path, class: "btn btn-default"
+                = link_to "Destroy", user_post_path, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-default"
+              = link_to "Back", user_post_path, class: "btn btn-default"
+
