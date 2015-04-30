@@ -22,6 +22,8 @@
         %h1
           = gravatar_for @user
           = @user.email
+        - if @user == current_user
+          = link_to "My Circle", circles_path, class: "btn btn-default btn-sm"
         - if @user != current_user && !@isFriend && !@sentRequest
           = link_to "Add Friend", requests_create_path(to_id: @user), method: :post, class: "btn btn-info btn-sm"
         - elsif @user != current_user && @sentRequest

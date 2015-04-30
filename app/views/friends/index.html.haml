@@ -1,4 +1,7 @@
 %h1 Friends
+= link_to "Add Circle", new_circle_path, class: "btn btn-default"
+%br/
+%br/
 .row
   - @friends.each do |friend|
     .col-sm-6.col-md-3
@@ -6,5 +9,12 @@
         .panel.image
           = link_to (gravatar_for friend), friend
         .panel-body
+          - @friendship = current_user.friendships.all.find_by("friend_id", friend.id)
           = friend.email
+          = simple_form_for @friendship do |f|
+            - if !current_user.friendships.all.find_by("friend_id", friend.id).circle.nil?
+              = f.input :circle_id, priority: current_user.friendships.all.find_by("friend_id", friend.id).circle.circle_name, collection: @circles, label_method: :circle_name, value_method: :id, class: "form-control"
+            - else
+              = f.input :circle_id, collection: @circles, label_method: :circle_name, value_method: :id, prompt: "Select a circle", class: "form-control"
+            = f.button :submit,"Update", class: "btn btn-default"
   

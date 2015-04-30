@@ -15,6 +15,9 @@ class User < ActiveRecord::Base
 
   has_many :friend_posts, through: :friends, source: :posts
 
+  # has_many :user_circles
+  has_many :circles
+
   searchkick
 
   # Include default devise modules. Others available are:

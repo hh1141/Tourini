@@ -1,0 +1,13 @@
+= simple_form_for @circle do |f|
+  - if @circle.errors.any?
+    #errors
+      %p
+        = pluralize(@circle.errors.count, 'error')
+        prevented this circle from saving.
+      - @circle.errors.each do |msg|
+        %ul
+          %li= msg
+  .panel-body
+    = f.input :circle_name, input_html: {class: 'form-control'}
+    = f.button :submit, class: "btn btn-primary"
+
