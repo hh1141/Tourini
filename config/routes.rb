@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :user
   root 'users#index'
 
   get 'friends/index' => 'friends#index'

@@ -34,7 +34,7 @@
   #post_show.row
     .col-md-8.col-md-offset-2
       .panel.panel-default
-        - if !post.image.empty?
+        - if !post.image_file_name.nil?
           .panel-heading.post_image
             = link_to (image_tag post.image.url(:medium)), [@user, post]
           .panel-body

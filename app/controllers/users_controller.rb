@@ -1,10 +1,12 @@
 class UsersController < ApplicationController
   before_action :find_user, only: [:show]
   before_action :authenticate_user!
+  
+
   def index
     @user = current_user
     @post = Post.new
-    @posts = my_timeline
+    # @posts = current_user.my_timeline
   end 
 
   def search
@@ -40,7 +42,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end 
 
-  def my_timeline
-    User.union([posts, friend_posts], distinct: true, order: 'created_at DESC', limit: 20)
-  end 
+  # def my_timeline
+  #   User.union([current_user.posts, current_user.friend_posts], distinct: true, order: 'created_at DESC', limit: 20)
+  # end 
 end

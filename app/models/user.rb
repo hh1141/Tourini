@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # def timeline
-  #   Profile.union([events, friend_events], :distinct => true, :order => 'created_at DESC', :limit => 20)
-  # end 
+  def my_timeline
+    User.union([posts, friend_posts], :distinct => true, :order => 'created_at DESC', :limit => 20)
+  end 
 end
