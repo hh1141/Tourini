@@ -1,6 +1,6 @@
 %h1 Circles
 .row
-  .col-md-6
+  .col-md-8.col-md-offset-2
     = simple_form_for current_user.circles.build do |f|
       .col-md-7
         = f.input :circle_name, input_html: {class: 'form-control'}
@@ -9,10 +9,13 @@
 .row
   - @circles.each do |circle|
     .col-md-3
-      %h4= circle.circle_name
-      .btn-group
-        = link_to "Edit", edit_circle_path(circle), class: "btn btn-default"
-        = link_to "Delete", circle, method: :delete, class: "btn btn-default"
+      .panel.panel-default
+        .panel-body
+          %h4= circle.circle_name
+        .panel-footer
+          .btn-group
+            = link_to "Edit", edit_circle_path(circle), class: "btn btn-default"
+            = link_to "Delete", circle, method: :delete, class: "btn btn-default"
 
 
 

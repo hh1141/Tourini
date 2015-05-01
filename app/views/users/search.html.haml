@@ -1,8 +1,49 @@
-- if @users.count == 0
+- if @users.count == 0 && @posts.count == 0
   .container
     = content_tag :div, "There is no result matched!", class: "alert"
 - else
   .row
-    - @users.each do |user|
-      = link_to user.email, user
-      .br/
+    %h2 Users
+  .row
+    - if @users.count == 0
+      .container
+        = content_tag :div, "There is no user matched!", class: "alert"
+    - else
+      - @users.each do |user|
+        - if user != current_user
+          .col-sm-6.col-md-3
+            .thumbnail
+              .panel.image
+                = link_to (gravatar_for user), user
+              .panel-body
+                = link_to user.email, user
+  .row
+    %h2 Posts
+  - if @posts.count == 0
+    .container
+      = content_tag :div, "There is no post matched!", class: "alert"
+  - else
+    - @posts.each do |post|
+      - if post.circle.nil? || post.circle == current_user.inverse_friendships.find_by("user_id", post.user).circle
+        #post_show.row
+          .col-md-8.col-md-offset-2
+            .panel.panel-default
+              - if !post.image_file_name.nil?
+                .panel-heading.post_image
+                  = link_to (image_tag post.image.url(:medium)), [post.user, post]
+                .panel-body
+                  %p= post.text
+              - else 
+                .panel-body
+                  %p.description
+                    = link_to post.text, [post.user,post]
+              .panel-footer
+                .row
+                  .col-md-7
+                    %p.user
+                      Submitted by
+                      = post.user.email
+                      = time_ago_in_words(post.created_at)
+                      ago
+      
+

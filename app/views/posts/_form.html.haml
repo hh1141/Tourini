@@ -13,5 +13,6 @@
     - if !@post.image_file_name.nil?
       = image_tag @post.image.url(:medium), class: 'image'
     -# = f.input :circle, as: :select, input_html: {class: 'form-control'}
+    = f.input :circle_id, collection: @circles, label_method: :circle_name, value_method: :id, class: "form-control"
     = f.input :location, as: :boolean, input_html: {class: 'checkbox'}
     = f.button :submit , class: "btn btn-primary"

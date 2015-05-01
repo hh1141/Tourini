@@ -30,6 +30,7 @@ class PostsController < ApplicationController
 
   def edit
     @user = current_user
+    @circles = current_user.circles.all.order('circle_name')
   end 
 
   def update
