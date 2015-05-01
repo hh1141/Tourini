@@ -20,9 +20,10 @@
           %li= link_to "Sign In", new_user_session_path
       - if user_signed_in?
         - if !current_user.inverse_requests.empty?
-          = link_to requests_index_path class: "btn btn-primary" do 
-            Request
-            %span.badge= current_user.inverse_requests.count
+          %p
+            = link_to requests_index_path class: "btn btn-primary" do 
+              Request
+              %span.badge= current_user.inverse_requests.count
         - else
           = link_to "Request", requests_index_path
         .navbar-form.navbar-right

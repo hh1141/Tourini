@@ -24,7 +24,7 @@
       = content_tag :div, "There is no post matched!", class: "alert"
   - else
     - @posts.each do |post|
-      - if post.circle.nil? || post.circle == current_user.inverse_friendships.find_by("user_id", post.user).circle
+      - if post.user == current_user || post.circle.nil? || post.circle == current_user.inverse_friendships.find_by("user_id", post.user).circle
         #post_show.row
           .col-md-8.col-md-offset-2
             .panel.panel-default
