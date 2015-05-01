@@ -4,16 +4,26 @@
       - if !@post.image_file_name.nil?
         .panel-heading.post_image
           = image_tag @post.image.url(:medium)
+      - elsif @post.location_save?
+        .panel-heading.post_image
+          = link_to (image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@post.location.latitude}%2C#{@post.location.longitude}"), [@user, @post]
       .panel-body
         %p.description= @post.text
       .panel-footer
         .row
           .col-md-7
-            %p.user
-              Submitted by
-              = @post.user.email
-              = time_ago_in_words(@post.created_at)
-              ago
+            - if @post.location_save?
+              %p
+                = @post.user.email
+                Check in at
+                %strong= @post.location.address
+                = time_ago_in_words(@post.created_at)
+            - else 
+              %p.user
+                Submitted by
+                = @post.user.email
+                = time_ago_in_words(@post.created_at)
+                ago
           .col-md-5
             .btn-group.pull-right
               - if current_user == @post.user

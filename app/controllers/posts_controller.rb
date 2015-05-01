@@ -14,11 +14,14 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
     @user = current_user
     @posts = current_user.friend_posts.all.order('created_at DESC')
-
     if @post.save
+      if @post.location_save
+        @location = Location.create(ip_address: remote_ip())
+        @post.update(location: @location)
+      end 
+      # debugger
       redirect_to root_path, notice: "Successfully created post"
     else 
-      # render 'users/index'
       render 'users/index'
     end 
   end 
@@ -52,7 +55,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:text, :image, :location, :circle_id)
+    params.require(:post).permit(:text, :image, :location, :circle_id, :location_save, :location_id)
   end 
 
   def find_post

@@ -16,7 +16,7 @@
           - if !@post.image_file_name.nil?
             = image_tag @post.image.url(:medium), class: 'image'
           = f.input :circle_id, collection: @circles, label_method: :circle_name, value_method: :id, class: "from-control"
-          = f.input :location, as: :boolean, input_html: {class: 'checkbox'}
+          = f.input :location_save, label: 'CHECK IN', as: :boolean, input_html: {class: 'checkbox'}
         .col-md-4
           - if @post.errors.any?
             .error-btn= f.button :submit, "POST", class: "btn btn-primary"
@@ -33,13 +33,24 @@
                 = link_to (image_tag post.image.url(:medium)), [@user, post]
               .panel-body
                 %p= post.text
+            - elsif post.location_save?
+              .panel-heading.post_image
+                = link_to (image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{post.location.latitude}%2C#{post.location.longitude}"), [@user, post]
+              .panel-body
+                %p= post.text
             - else 
               .panel-body
                 %p.description
                   = link_to post.text, [@user, post]
             .panel-footer
               .row
-                .col-md-7
+                - if post.location_save?
+                  %p
+                    = post.user.email
+                    Check in at
+                    %strong= post.location.address
+                    = time_ago_in_words(post.created_at)
+                - else
                   %p.user
                     Submitted by
                     = post.user.email

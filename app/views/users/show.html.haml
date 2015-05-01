@@ -41,17 +41,30 @@
               = link_to (image_tag post.image.url(:medium)), [@user, post]
             .panel-body
               %p= post.text
+          - elsif post.location_save?
+            .panel-heading.post_image
+              = link_to (image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{post.location.latitude}%2C#{post.location.longitude}"), [@user, post]# "http://maps.google.com/maps?q=#{post.location.latitude},#{post.location.longitude}"
+            .panel-body
+              %p.description
+                = post.text
           - else 
             .panel-body
               %p.description
                 = link_to post.text, [@user, post]
           .panel-footer
             .row
-              .col-md-7
-                %p.user
-                  Submitted by
-                  = post.user.email
-                  = time_ago_in_words(post.created_at)
-                  ago
+              .col-md-12
+                - if post.location_save != nil && post.location_save?
+                  %p
+                    Check in at
+                    %strong= post.location.address
+                    = time_ago_in_words(post.created_at)
+                    ago
+                - else 
+                  %p
+                    Submitted by
+                    = post.user.email
+                    = time_ago_in_words(post.created_at)
+                    ago
 
 

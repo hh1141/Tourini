@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     @post = Post.new
     @posts = current_user.friend_posts.all.order('created_at DESC')
     @circles = current_user.circles.all.order('circle_name')
+    @ip = remote_ip()
   end 
 
   def search

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430220820) do
+ActiveRecord::Schema.define(version: 20150501144859) do
 
   create_table "circles", force: :cascade do |t|
     t.string   "circle_name"
@@ -26,6 +26,18 @@ ActiveRecord::Schema.define(version: 20150430220820) do
     t.integer  "user_id"
     t.integer  "friend_id"
     t.integer  "circle_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "address"
+    t.text     "attractions"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "ip_address"
+    t.integer  "post_id"
+    t.string   "city"
   end
 
   create_table "post_circles", force: :cascade do |t|
@@ -46,6 +58,8 @@ ActiveRecord::Schema.define(version: 20150430220820) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "circle_id"
+    t.integer  "location_id"
+    t.boolean  "location_save"
   end
 
   create_table "requests", force: :cascade do |t|
