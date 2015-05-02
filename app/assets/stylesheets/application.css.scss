@@ -147,7 +147,7 @@ body {
 	margin-top: 25px;
 }
 .post-btn {
-    margin-top: 40px;
+    // margin-top: 20px;
     .btn{
         padding: 90px 70px;
     }
@@ -162,6 +162,16 @@ body {
     margin-top: 24px;
 }
 
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+.new-post-border {
+        background-color: #CFCFD4;
+        border-style: solid;
+        border-color: #CFCFD4;
+}
 
 
 #post_show {
@@ -187,6 +197,18 @@ body {
 			margin: 0;
 		}
 	}
+    .search-show {
+        text-align: center;
+            p {
+                text-align: center
+            }
+    }
+    .friend-show {
+        text-align: center;
+            h4 {
+                color: #297ACC;
+            }
+    }
 	.panel-footer {
 		padding: 20px 35px;
 		p {
@@ -198,3 +220,4 @@ body {
         
 	}
 }
+

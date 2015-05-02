@@ -1,16 +1,17 @@
 %h1 Friends
-= link_to "Add Circle", new_circle_path, class: "btn btn-default"
+= link_to "Add Circle", new_circle_path, class: "btn btn-primary"
 %br/
 %br/
 .row
   - @friends.each do |friend|
     .col-sm-6.col-md-3
-      .thumbnail
-        .panel.image
+      #post_show.thumbnail
+        .panel.panel-default.panel-heading.post_image
           = link_to (gravatar_for friend), friend
-        .panel-body
+        .friend-show
           - @friendship = current_user.friendships.all.find_by("friend_id", friend.id)
-          = friend.email
+          %h4
+            %strong= friend.name
           = simple_form_for @friendship do |f|
             - if !current_user.friendships.all.find_by("friend_id", friend.id).circle.nil?
               = f.input :circle_id, priority: current_user.friendships.all.find_by("friend_id", friend.id).circle.circle_name, collection: @circles, label_method: :circle_name, value_method: :id, class: "form-control"

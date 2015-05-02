@@ -12,11 +12,14 @@
       - @users.each do |user|
         - if user != current_user
           .col-sm-6.col-md-3
-            .thumbnail
-              .panel.image
+            #post_show.thumbnail
+              .panel.panel-default.panel-heading.post_image
                 = link_to (gravatar_for user), user
-              .panel-body
-                = link_to user.email, user
+              .search-show
+                %p
+                  %strong= link_to user.name, user
+                  %br/
+                  .description= user.email
   .row
     %h2 Posts
   - if @posts.count == 0

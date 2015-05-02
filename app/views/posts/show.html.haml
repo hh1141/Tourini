@@ -14,14 +14,14 @@
           .col-md-7
             - if @post.location_save?
               %p
-                = @post.user.email
+                %strong= @post.user.name
                 Check in at
                 %strong= @post.location.address
                 = time_ago_in_words(@post.created_at)
             - else 
               %p.user
                 Submitted by
-                = @post.user.email
+                %strong= @post.user.name
                 = time_ago_in_words(@post.created_at)
                 ago
           .col-md-5

@@ -18,12 +18,19 @@
   .col-md-8.col-md-offset-2
     .panel.panel-default
       .panel-body
-        - provide(:email, @user.email)
+        - provide(:name, @user.name)
         %h1
           = gravatar_for @user
+          - if @user == current_user
+            = link_to @user.name, edit_user_registration_path
+          - else
+            = @user.name
+
+        %p.description
+          Email:
           = @user.email
         - if @user == current_user
-          = link_to "My Circle", circles_path, class: "btn btn-default btn-sm"
+          = link_to "My Circles", circles_path, class: "btn btn-default btn-sm"
         - if @user != current_user && !@isFriend && !@sentRequest
           = link_to "Add Friend", requests_create_path(to_id: @user), method: :post, class: "btn btn-info btn-sm"
         - elsif @user != current_user && @sentRequest
@@ -62,8 +69,7 @@
                     ago
                 - else 
                   %p
-                    Submitted by
-                    = post.user.email
+                    Submitted
                     = time_ago_in_words(post.created_at)
                     ago
 

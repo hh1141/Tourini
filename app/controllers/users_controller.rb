@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
   def search
     if params[:search].present?
-      @users = User.search(params[:search],fields: [:email])
+      @users = User.search(params[:search],fields: [:email, :name], operator: "or")
       @posts = Post.search(params[:search],fields: [:text])
     else 
       @users = User.all
