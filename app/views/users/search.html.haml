@@ -22,31 +22,78 @@
                   .description= user.email
   .row
     %h2 Posts
-  - if @posts.count == 0
-    .container
-      = content_tag :div, "There is no post matched!", class: "alert"
+  - if !@nearby
+    - if @posts.count == 0
+      .container
+        = content_tag :div, "There is no post matched!", class: "alert"
+    - else
+      - @posts.each do |post|
+        - if post.user == current_user || post.circle.nil? || post.circle == current_user.inverse_friendships.find_by("user_id", post.user).circle
+          #post_show.row
+            .col-md-8.col-md-offset-2
+              .panel.panel-default
+                - if !post.image_file_name.nil?
+                  .panel-heading.post_image
+                    = link_to (image_tag post.image.url(:medium)), [post.user, post]
+                  .panel-body
+                    %p.description= post.text
+                - elsif post.location_save?
+                  .panel-heading.post_image
+                    = link_to (image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{post.location.latitude}%2C#{post.location.longitude}"), [post.user, post]
+                  .panel-body
+                    %p.description= post.text
+                - else
+                  .panel-body
+                    %p.description
+                      = link_to post.text, [post.user,post]
+                .panel-footer
+                  .row
+                    - if post.location_save?
+                      %p
+                        %strong= post.user.name
+                        check in at
+                        %strong= post.location.address
+                    - else
+                      %p.user
+                        Submitted by
+                        %strong= post.user.name
+                        = time_ago_in_words(post.created_at)
+                        ago
   - else
-    - @posts.each do |post|
-      - if post.user == current_user || post.circle.nil? || post.circle == current_user.inverse_friendships.find_by("user_id", post.user).circle
-        #post_show.row
-          .col-md-8.col-md-offset-2
-            .panel.panel-default
-              - if !post.image_file_name.nil?
-                .panel-heading.post_image
-                  = link_to (image_tag post.image.url(:medium)), [post.user, post]
-                .panel-body
-                  %p= post.text
-              - else 
-                .panel-body
-                  %p.description
-                    = link_to post.text, [post.user,post]
-              .panel-footer
-                .row
-                  .col-md-7
-                    %p.user
-                      Submitted by
-                      = post.user.email
-                      = time_ago_in_words(post.created_at)
-                      ago
-      
+    - if @posts.nil?
+      .container
+        = content_tag :div, "There is no post matched!", class: "alert"
+    - else
+      - @posts.each do |post|
+        - if post.user == current_user || post.circle.nil? || post.circle == current_user.inverse_friendships.find_by("user_id", post.user).circle
+          #post_show.row
+            .col-md-8.col-md-offset-2
+              .panel.panel-default
+                - if !post.image_file_name.nil?
+                  .panel-heading.post_image
+                    = link_to (image_tag post.image.url(:medium)), [post.user, post]
+                  .panel-body
+                    %p= post.text
+                - elsif post.location_save?
+                  .panel-heading.post_image
+                    = link_to (image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{post.location.latitude}%2C#{post.location.longitude}"), [post.user, post]
+                  .panel-body
+                    %p.description= post.text
+                - else 
+                  .panel-body
+                    %p.description
+                      = link_to post.text, [post.user, post]
+                .panel-footer
+                  .row
+                    - if post.location_save?
+                      %p
+                        %strong= post.user.name
+                        check in at
+                        %strong= post.location.address
+                    - else 
+                      %p.user
+                        Submitted by
+                        %strong= post.user.name
+                        = time_ago_in_words(post.created_at)
+                        ago
 

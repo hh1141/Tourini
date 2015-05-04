@@ -12,13 +12,31 @@ class UsersController < ApplicationController
   end 
 
   def search
+    @nearby = params[:nearby].present?
     if params[:search].present?
       @users = User.search(params[:search],fields: [:email, :name], operator: "or")
       @posts = Post.search(params[:search],fields: [:text])
+      if @nearby
+        current_location = Location.create(ip_address: remote_ip())
+        @locations = current_location.nearbys(params[:nearby])
+        current_location.destroy
+        # @posts = Post.search(params[:search], field: [:text], where: {location_id: location_ids})
+        @posts = []
+        if !@locations.nil?
+          @locations.each do |location|
+            @posts << location.post
+          end
+        end 
+        # @posts = @posts.search(params[:search], field: [:text])
+        post_ids = @posts.map{|post| post.id}
+        @posts = Post.search(params[:search], field: [:text], where: {id: post_ids})
+        # debugger
+      end 
     else 
       @users = User.all
       @posts = current_user.posts.all.order('created_at DESC')
     end 
+    
   end 
 
   def show

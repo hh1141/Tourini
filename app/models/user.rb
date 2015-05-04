@@ -3,20 +3,21 @@ class User < ActiveRecord::Base
 
   has_many :posts, dependent: :destroy
 
-  has_many :friendships
+  has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
-  has_many :inverse_friendships, class_name: "Friendship", foreign_key: "friend_id"
+  has_many :inverse_friendships, class_name: "Friendship", foreign_key: "friend_id", dependent: :destroy
   has_many :inverse_friends, through: :inverse_friendships, source: :user
 
-  has_many :requests, foreign_key: "from_id"
+  has_many :requests, foreign_key: "from_id", dependent: :destroy
   has_many :tos, through: :requests
-  has_many :inverse_requests, class_name: "Request", foreign_key: "to_id"
+  has_many :inverse_requests, class_name: "Request", foreign_key: "to_id", dependent: :destroy
   has_many :froms, through: :inverse_requests
 
   has_many :friend_posts, through: :friends, source: :posts
 
   # has_many :user_circles
-  has_many :circles
+  has_many :circles, dependent: :destroy
+
 
   searchkick
 
