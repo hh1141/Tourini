@@ -18,4 +18,4 @@
             - else
               = f.input :circle_id, collection: @circles, label_method: :circle_name, value_method: :id, prompt: "Select a circle", class: "form-control"
             = f.button :submit,"Update", class: "btn btn-default"
-  
+.col-md-8.col-md-offset-2= paginate @friends

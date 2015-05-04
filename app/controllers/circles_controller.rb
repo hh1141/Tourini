@@ -3,7 +3,7 @@ class CirclesController < ApplicationController
   before_action :find_circle, only: [:show, :edit, :update, :destroy]
 
   def index
-    @circles = current_user.circles.all.order('created_at DESC')
+    @circles = current_user.circles.all.order('created_at DESC').page(params[:page]).per(8)
   end 
 
   def new
@@ -13,7 +13,7 @@ class CirclesController < ApplicationController
   def create
     @circle = current_user.circles.build(circle_params)
     if @circle.save
-      redirect_to friends_index_path
+      redirect_to :back
     else
       render 'new'
     end 

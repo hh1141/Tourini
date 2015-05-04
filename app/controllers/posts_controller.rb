@@ -13,7 +13,7 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     @user = current_user
-    @posts = current_user.friend_posts.all.order('created_at DESC')
+    @posts = current_user.friend_posts.all.order('created_at DESC').page(params[:page]).per(5)
     if @post.save
       if @post.location_save
         @location = Location.create(ip_address: remote_ip())
@@ -22,6 +22,7 @@ class PostsController < ApplicationController
       # debugger
       redirect_to root_path, notice: "Successfully created post"
     else 
+      # debugger
       render 'users/index'
     end 
   end 

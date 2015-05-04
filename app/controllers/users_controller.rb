@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def index
     @user = current_user
     @post = Post.new
-    @posts = current_user.friend_posts.all.order('created_at DESC')
+    @posts = current_user.friend_posts.all.order('created_at DESC').page(params[:page]).per(5)
     @circles = current_user.circles.all.order('circle_name')
     @ip = remote_ip()
   end 
@@ -15,32 +15,30 @@ class UsersController < ApplicationController
     @nearby = params[:nearby].present?
     if params[:search].present?
       @users = User.search(params[:search],fields: [:email, :name], operator: "or")
-      @posts = Post.search(params[:search],fields: [:text])
+      @posts = Post.search(params[:search],fields: [:text], page: params[:page], per_page: 15)
       if @nearby
         current_location = Location.create(ip_address: remote_ip())
         @locations = current_location.nearbys(params[:nearby])
         current_location.destroy
-        # @posts = Post.search(params[:search], field: [:text], where: {location_id: location_ids})
         @posts = []
         if !@locations.nil?
           @locations.each do |location|
             @posts << location.post
           end
         end 
-        # @posts = @posts.search(params[:search], field: [:text])
         post_ids = @posts.map{|post| post.id}
-        @posts = Post.search(params[:search], field: [:text], where: {id: post_ids})
-        # debugger
+        @posts = Post.search(params[:search], page: params[:page], per_page: 15, field: [:text], where: {id: post_ids})
       end 
     else 
       @users = User.all
-      @posts = current_user.posts.all.order('created_at DESC')
+      @posts = current_user.posts.all.order('created_at DESC').page(params[:page]).per(5)
+      
     end 
     
   end 
 
   def show
-    @posts = @user.posts.all.order("created_at DESC")
+    @posts = @user.posts.all.order("created_at DESC").page(params[:page]).per(5)
     @isFriend = false
     @sentRequest = false
 

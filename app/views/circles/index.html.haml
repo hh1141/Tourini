@@ -16,6 +16,6 @@
           .btn-group
             = link_to "Edit", edit_circle_path(circle), class: "btn btn-default"
             = link_to "Delete", circle, method: :delete, class: "btn btn-default"
-
+.col-md-8.col-md-offset-2= paginate @circles
 
 

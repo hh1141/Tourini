@@ -29,7 +29,7 @@
         .navbar-form.navbar-right
           = form_tag search_users_path, method: :get, role: "search" do |f|
             = text_field_tag :search, params[:search], placeholder: "User name or Keyword", class: "form-control"
-            = text_field_tag :nearby, params[:nearby], placeholder: "Nearby", class: "form-control"
+            = text_field_tag :nearby, params[:nearby], placeholder: "Nearby (miles)", class: "form-control"
             -# = text_field_tag :time, params[:time], placeholder: "Within", class: "form-control"
             = submit_tag "Search", name: nil, class: "btn btn-default"
        

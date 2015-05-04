@@ -38,6 +38,7 @@ gem 'simple_form', '~> 3.1.0'
 gem 'searchkick', '~> 0.8.7'
 gem 'paperclip', '~> 4.2.1'
 gem 'geocoder', '~> 1.2.8'
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
