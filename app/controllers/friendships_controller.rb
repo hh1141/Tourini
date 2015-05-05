@@ -1,4 +1,5 @@
 class FriendshipsController < ApplicationController
+  before_action :authenticate_user!
   def create
     @friendship = current_user.friendships.build(friend_id: params[:friend_id])
     @inverseFriendship = current_user.inverse_friendships.build(user_id: params[:friend_id])
@@ -13,7 +14,7 @@ class FriendshipsController < ApplicationController
 
   def update
     # @friendship = current_user.friendships.find(params[:id]).update(circle_id: params[:circle_id])
-    @friendship = current_user.friendships.find_by("friend_id", params[:friend_id])
+    @friendship = current_user.friendships.where(friend_id: params[:friend_id]).first
     @friendship.update(params.require(:friendship).permit(:circle_id))
     # debugger
     redirect_to friends_index_path

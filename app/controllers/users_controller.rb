@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     @posts = current_user.friend_posts.all.order('created_at DESC').page(params[:page]).per(5)
     @circles = current_user.circles.all.order('circle_name')
     @ip = remote_ip()
+    # debugger
   end 
 
   def search
@@ -28,6 +29,7 @@ class UsersController < ApplicationController
         end 
         post_ids = @posts.map{|post| post.id}
         @posts = Post.search(params[:search], page: params[:page], per_page: 15, field: [:text], where: {id: post_ids})
+        # debugger
       end 
     else 
       @users = User.all

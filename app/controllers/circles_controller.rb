@@ -42,10 +42,10 @@ class CirclesController < ApplicationController
   private
 
   def find_circle
-    @circle = current_user.circles.find(params[:id])
+    @circle = current_user.circles.find(params[:circle_name])
   end 
 
   def circle_params
-    params.require(:circle).permit(:circle_name)
+    params.require(:circle).permit(:circle_id)
   end 
 end

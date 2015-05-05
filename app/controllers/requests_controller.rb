@@ -1,4 +1,5 @@
 class RequestsController < ApplicationController
+  before_action :authenticate_user!
   def index
     @requests = current_user.inverse_requests.all
   end 

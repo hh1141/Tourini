@@ -9,13 +9,13 @@
         .panel.panel-default.panel-heading.post_image
           = link_to (gravatar_for friend), friend
         .friend-show
-          - @friendship = current_user.friendships.all.find_by("friend_id", friend.id)
+          - @friendship = current_user.friendships.all.where(friend_id: friend).first
           %h4
             %strong= friend.name
-          = simple_form_for @friendship do |f|
-            - if !current_user.friendships.all.find_by("friend_id", friend.id).circle.nil?
-              = f.input :circle_id, priority: current_user.friendships.all.find_by("friend_id", friend.id).circle.circle_name, collection: @circles, label_method: :circle_name, value_method: :id, class: "form-control"
+          = simple_form_for(@friendship, :url => friendship_path(@friendship, :friend_id => friend)) do |f|
+            - if !current_user.friendships.where(friend_id: friend).first.circle.nil?
+              = f.input :circle_id, priority: current_user.friendships.where(friend_id: friend).first.circle.circle_name, collection: @circles, label_method: :circle_name, value_method: :id, blank: true, class: "form-control"
             - else
-              = f.input :circle_id, collection: @circles, label_method: :circle_name, value_method: :id, prompt: "Select a circle", class: "form-control"
+              = f.input :circle_id, collection: @circles, label_method: :circle_name, value_method: :id, prompt: "Select a circle", blank: true, class: "form-control"
             = f.button :submit,"Update", class: "btn btn-default"
 .col-md-8.col-md-offset-2= paginate @friends

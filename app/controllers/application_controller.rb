@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
     if request.remote_ip == '::1'
       # Hard coded remote address
       '47.17.230.1'
+      # '14.111.255.255'
     else
       request.remote_ip
     end
