@@ -1,5 +1,6 @@
 class Post < ActiveRecord::Base
   searchkick 
+  acts_as_votable
 
   # def search_data
   #   attributes.merge Post.location

@@ -11,7 +11,7 @@
         %p.description= @post.text
       .panel-footer
         .row
-          .col-md-7
+          .col-md-6
             - if @post.location_save?
               %p
                 %strong= @post.user.name
@@ -24,8 +24,11 @@
                 %strong= @post.user.name
                 = time_ago_in_words(@post.created_at)
                 ago
-          .col-md-5
+          .col-md-6
             .btn-group.pull-right
+              = link_to like_user_post_path(@post.user, @post), method: :put, class: "btn btn-default" do
+                %span.glyphicon.glyphicon-heart
+                  = @post.get_upvotes.size
               - if current_user == @post.user
                 = link_to "Edit", edit_user_post_path, class: "btn btn-default"
                 = link_to "Destroy", user_post_path, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-default"

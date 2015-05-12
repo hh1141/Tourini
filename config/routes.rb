@@ -18,7 +18,11 @@ Rails.application.routes.draw do
   resources :friendships, only: [:update]
   resources :circles
   resources :users do
-    resources :posts
+    resources :posts do
+      member do
+        put 'like' => 'posts#upvote'
+      end
+    end 
     collection do
       get 'search'
     end

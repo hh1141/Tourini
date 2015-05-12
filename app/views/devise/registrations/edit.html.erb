@@ -34,6 +34,14 @@
             <%# <%= f.label :name %1><br /> %>
             <%= f.text_field :password_confirmation, placeholder: "Confirm Your Password", autofocus: true, class: "form-control" %>
           </div>
+            <br>
+          <div class="input-group">
+              <div class = "input-group-addon", id = "basic-addon1">
+                  <span class = "glyphicon glyphicon-certificate"><span>
+              </div>
+            <%# <%= f.label :name %1><br /> %>
+            <%= f.text_field :current_password, placeholder: "Current Password", autofocus: true, class: "form-control" %>
+          </div>
 
           <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
             <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>

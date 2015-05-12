@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :find_post, only: [:show, :edit, :update, :destroy]
+  before_action :find_post, only: [:show, :edit, :update, :destroy, :upvote]
   before_action :authenticate_user!, except: [:show]
   def index
     @posts = Post.all.order("created_at DESC")
@@ -51,6 +51,11 @@ class PostsController < ApplicationController
     @user = current_user
 
     redirect_to @user
+  end 
+
+  def upvote
+    @post.upvote_by current_user
+    redirect_to :back
   end 
 
   private
