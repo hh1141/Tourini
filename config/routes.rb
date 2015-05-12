@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  
   devise_for :user
   root 'users#index'
 
@@ -22,6 +23,7 @@ Rails.application.routes.draw do
       member do
         put 'like' => 'posts#upvote'
       end
+      resources :comments
     end 
     collection do
       get 'search'

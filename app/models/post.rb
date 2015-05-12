@@ -5,6 +5,7 @@ class Post < ActiveRecord::Base
   # def search_data
   #   attributes.merge Post.location
   # end 
+  has_many :comments
   belongs_to :user
   belongs_to :circle
   has_one :location, dependent: :destroy

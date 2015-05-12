@@ -33,4 +33,14 @@
                 = link_to "Edit", edit_user_post_path, class: "btn btn-default"
                 = link_to "Destroy", user_post_path, method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-default"
               = link_to "Back", :back, class: "btn btn-default"
-
+.col-md-8.col-md-offset-2
+  .panel.panel-default.panel-body
+    %h3.comment_title
+      = pluralize(@post.comments.count, 'comment')
+    #comments
+      = render @post.comments
+    =simple_form_for [@post.user, @post, Comment.new] do |f|
+      .field
+        =f.text_area :body, class: "form-control"
+        %br/
+      = f.submit "Add Comment", class: "btn btn-primary"
