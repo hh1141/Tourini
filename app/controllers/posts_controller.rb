@@ -20,7 +20,7 @@ class PostsController < ApplicationController
         @post.update(location: @location)
       end 
       # debugger
-      redirect_to root_path, notice: "Successfully created post"
+      redirect_to current_user, notice: "Successfully created post"
     else 
       # debugger
       render 'users/index'

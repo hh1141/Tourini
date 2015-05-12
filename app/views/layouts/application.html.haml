@@ -22,14 +22,16 @@
       - if user_signed_in?
         - if !current_user.inverse_requests.empty?
           = link_to requests_index_path do 
-            Request
+            -# Request
             %span.badge= current_user.inverse_requests.count
-        - else
-          = link_to "Request", requests_index_path
+        -# - else
+        -#   = link_to "Request", requests_index_path
         .navbar-form.navbar-right
           = form_tag search_users_path, method: :get, role: "search" do |f|
             = text_field_tag :search, params[:search], placeholder: "User name or Keyword", class: "form-control"
-            = text_field_tag :nearby, params[:nearby], placeholder: "Nearby (miles)", class: "form-control"
+            -# = text_field_tag :nearby, params[:nearby], placeholder: "Nearby (miles)", class: "form-control"
+            = select_tag :nearby, "<option value = 10>10 miles</option><option value = 50>50 miles</option>", prompt: "nearby..", class: "form-control"
+            = select_tag :within, "<option value = 7>one week</option><option value = 30>one month</option>", prompt: "within..", class: "form-control"
             -# = text_field_tag :time, params[:time], placeholder: "Within", class: "form-control"
             = submit_tag "Search", name: nil, class: "btn btn-default"
        

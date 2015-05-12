@@ -14,9 +14,15 @@ class UsersController < ApplicationController
 
   def search
     @nearby = params[:nearby].present?
+    @within = params[:within].present?
     if params[:search].present?
       @users = User.search(params[:search],fields: [:email, :name], operator: "or")
-      @posts = Post.search(params[:search],fields: [:text], page: params[:page], per_page: 15)
+      if @within
+        @posts = Post.search(params[:search],fields: [:text], where: {created_at: {gt: Time.now - params[:within].to_i*3600*24}}, page: params[:page], per_page: 15)
+      else 
+        @posts = Post.search(params[:search],fields: [:text], page: params[:page], per_page: 15)
+      end 
+      
       if @nearby
         current_location = Location.create(ip_address: remote_ip())
         @locations = current_location.nearbys(params[:nearby])
@@ -28,7 +34,11 @@ class UsersController < ApplicationController
           end
         end 
         post_ids = @posts.map{|post| post.id}
-        @posts = Post.search(params[:search], page: params[:page], per_page: 15, field: [:text], where: {id: post_ids})
+        if @within
+          @posts = Post.search(params[:search], page: params[:page], per_page: 15, field: [:text], where: {id: post_ids, created_at: {gt: (Time.now - params[:within].to_i*3600*24)}})
+        else 
+          @posts = Post.search(params[:search], page: params[:page], per_page: 15, field: [:text], where: {id: post_ids})
+        end 
         # debugger
       end 
     else 
@@ -36,7 +46,7 @@ class UsersController < ApplicationController
       @posts = current_user.posts.all.order('created_at DESC').page(params[:page]).per(5)
       
     end 
-    
+    # debugger
   end 
 
   def show
