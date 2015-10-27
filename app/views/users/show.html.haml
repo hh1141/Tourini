@@ -39,7 +39,7 @@
           = link_to "Remove friend ", friendships_destroy_path(friendship_id: @friendship, inverse_friendship_id: @inverseFriendship), method: :delete, class: "btn btn-info btn-sm"
 
 - @posts.each do |post|
-  - if post.user == current_user || post.circle.nil? || (!current_user.inverse_friendships.empty? && post.circle == current_user.inverse_friendships.where(user_id: post.user).first.circle)
+  - if post.user == current_user || post.circle.nil? || (!current_user.inverse_friendships.where(user_id: post.user).empty? && post.circle == current_user.inverse_friendships.where(user_id: post.user).first.circle)
     #post_show.row
       .col-md-8.col-md-offset-2
         .panel.panel-default

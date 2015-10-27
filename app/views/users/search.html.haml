@@ -28,7 +28,7 @@
         = content_tag :div, "There is no post matched!", class: "alert"
     - else
       - @posts.each do |post|
-        - if post.user == current_user || post.circle.nil? || (!current_user.inverse_friendships.empty? && post.circle == current_user.inverse_friendships.where(user_id: post.user).first.circle)
+        - if post.user == current_user || post.circle.nil? || (!current_user.inverse_friendships.where(user_id: post.user).empty? && post.circle == current_user.inverse_friendships.where(user_id: post.user).first.circle)
           #post_show.row
             .col-md-8.col-md-offset-2
               .panel.panel-default
@@ -67,7 +67,7 @@
         = content_tag :div, "There is no post matched!", class: "alert"
     - else
       - @posts.each do |post|
-        - if post.user == current_user || post.circle.nil? || (!current_user.inverse_friendships.empty? && post.circle == current_user.inverse_friendships.where(user_id: post.user).first.circle)
+        - if post.user == current_user || post.circle.nil? || (!current_user.inverse_friendships.where(user_id: post.user).empty? && post.circle == current_user.inverse_friendships.where(user_id: post.user).first.circle)
           #post_show.row
             .col-md-8.col-md-offset-2
               .panel.panel-default

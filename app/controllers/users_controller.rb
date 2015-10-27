@@ -6,7 +6,17 @@ class UsersController < ApplicationController
   def index
     @user = current_user
     @post = Post.new
-    @posts = current_user.friend_posts.all.order('created_at DESC').page(params[:page]).per(5)
+
+    # @posts_temp = current_user.friend_posts.all.order('created_at DESC')
+    # @posts = []
+    # @posts_temp.each do |post|
+    #   if post.user == current_user || post.circle == nil || (!current_user.inverse_friendships.where(user_id: post.user).empty? && post.circle == current_user.inverse_friendships.where(user_id: post.user).first.circle)
+    #     @posts << post
+    #   end 
+    # end
+    # @posts = @posts.all.page(params[:page]).per(5)
+
+    @posts = current_user.friend_posts.all.order('created_at DESC').page(params[:page]).per(10)
     @circles = current_user.circles.all.order('circle_name')
     @ip = remote_ip()
     # debugger

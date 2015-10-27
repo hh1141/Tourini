@@ -27,7 +27,7 @@
   .row.col-md-6.col-md-offset-2
     %h2 Friends' Posts
   - @posts.each do |post|
-    - if post.circle.nil? || (!current_user.inverse_friendships.empty? && post.circle == current_user.inverse_friendships.where(user_id: post.user).first.circle)
+    - if post.circle.nil? || (!current_user.inverse_friendships.where(user_id: post.user).empty? && post.circle == current_user.inverse_friendships.where(user_id: post.user).first.circle)
       #post_show.row
         .col-md-8.col-md-offset-2
           .panel.panel-default
