@@ -118,6 +118,7 @@ GEM
       cocaine (~> 0.5.3)
       mime-types
     pg (0.18.3)
+    puma (2.15.3)
     rack (1.6.0)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -207,6 +208,7 @@ DEPENDENCIES
   kaminari
   paperclip (~> 4.2.1)
   pg
+  puma
   rails (= 4.2.1)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
