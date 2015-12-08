@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  devise_for :users, controllers: {create: create}
+  devise_for :users
   root 'users#index'
 
   get 'friends/index' => 'friends#index'
