@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < Devise::SessionsController
   before_action :find_user, only: [:show]
   before_action :authenticate_user!
 
