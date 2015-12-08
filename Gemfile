@@ -26,6 +26,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Unicorn as the app server
 # gem 'unicorn'
+gem 'puma'
 gem 'devise', '~> 3.4.1'
 gem 'haml', '~> 4.0.6'
 gem 'bootstrap-sass', '~> 3.3.4.1'
